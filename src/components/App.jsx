@@ -68,16 +68,10 @@ export const App = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const visibleContacts = useMemo(() => {
-    if (contacts.length === 0) {
-      return [];
-    }
-
-    return contacts.filter(item => {
-      const hasContact = item.name.toLowerCase().includes(filter.toLowerCase());
-      return hasContact;
-    });
-  }, [contacts, filter]);
+  const visibleContacts = contacts.filter(item => {
+    const hasContact = item.name.toLowerCase().includes(filter.toLowerCase());
+    return hasContact;
+  });
 
   return (
     <Layout>
