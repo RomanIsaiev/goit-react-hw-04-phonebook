@@ -25,7 +25,7 @@ const getContacts = () => {
 
 export const App = () => {
   const [contacts, setContacts] = useState(getContacts);
-  const [filter, setFilter] = useState('');
+  const [contactsFilter, setcontactsFilter] = useState('');
 
   const addContanct = newContact => {
     const contact = {
@@ -46,7 +46,7 @@ export const App = () => {
   };
 
   const updateContactsFilter = newContanct => {
-    setFilter(newContanct);
+    setcontactsFilter(newContanct);
   };
 
   const deleteContact = contactId => {
@@ -69,7 +69,9 @@ export const App = () => {
   }, [contacts]);
 
   const visibleContacts = contacts.filter(item => {
-    const hasContact = item.name.toLowerCase().includes(filter.toLowerCase());
+    const hasContact = item.name
+      .toLowerCase()
+      .includes(contactsFilter.toLowerCase());
     return hasContact;
   });
 
@@ -78,7 +80,7 @@ export const App = () => {
       <h1>Phonebook</h1>
       <ContactForm onAddContact={addContanct} />
       <h2>Contacts</h2>
-      <Filter filter={filter} onUpdateName={updateContactsFilter} />
+      <Filter filter={contactsFilter} onUpdateName={updateContactsFilter} />
       {contacts.length > 0 && (
         <ContactsList
           contacts={visibleContacts}
