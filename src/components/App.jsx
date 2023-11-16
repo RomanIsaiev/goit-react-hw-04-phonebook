@@ -69,6 +69,10 @@ export const App = () => {
   }, [contacts]);
 
   const visibleContacts = useMemo(() => {
+    if (contacts.length === 0) {
+      return [];
+    }
+
     return contacts.filter(item => {
       const hasContact = item.name.toLowerCase().includes(filter.toLowerCase());
       return hasContact;
