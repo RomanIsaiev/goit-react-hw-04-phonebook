@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 
 import { nanoid } from 'nanoid';
@@ -10,13 +10,21 @@ import { Filter } from './Filter/Filter';
 import { Layout } from './App.styled';
 import { GlobalStyle } from 'GlobalStyle';
 
+const storageKey = 'contacts';
+
+const initialContacts = {
+  name: '',
+  number: '',
+  id: '',
+};
+
+const getContacts = () => {
+  const savedContacts = window.localStorage.getItem(storageKey);
+  return savedContacts !== null ? JSON.parse(savedContacts) : initialContacts;
+};
+
 export const App = () => {
-  const [contacts, setContacts] = useState([
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ]);
+  const [contacts, setContacts] = useState(getContacts);
   const [filter, setFilter] = useState('');
 
   const addContanct = newContact => {
@@ -43,7 +51,7 @@ export const App = () => {
 
   const deleteContact = contactId => {
     setContacts(prevContacts => {
-      prevContacts.filter(item => item.id !== contactId);
+      return prevContacts.filter(item => item.id !== contactId);
     });
   };
 
