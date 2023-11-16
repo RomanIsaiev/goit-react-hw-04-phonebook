@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 
 import { nanoid } from 'nanoid';
@@ -11,12 +11,6 @@ import { Layout } from './App.styled';
 import { GlobalStyle } from 'GlobalStyle';
 
 const storageKey = 'contacts';
-
-// const initialContacts = {
-//   name: '',
-//   number: '',
-//   id: '',
-// };
 
 const getContacts = () => {
   const savedContacts = window.localStorage.getItem(storageKey);
@@ -67,12 +61,14 @@ export const App = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const visibleContacts = contacts.filter(item => {
-    const hasContact = item.name
-      .toLowerCase()
-      .includes(contactsFilter.toLowerCase());
-    return hasContact;
-  });
+  const visibleContacts = useMemo(() => {
+    return contacts.filter(item => {
+      const hasContact = item.name
+        .toLowerCase()
+        .includes(contactsFilter.toLowerCase());
+      return hasContact;
+    });
+  }, [contacts, contactsFilter]);
 
   return (
     <Layout>
