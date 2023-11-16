@@ -12,17 +12,16 @@ import { GlobalStyle } from 'GlobalStyle';
 
 const storageKey = 'contacts';
 
-const initialContacts = {
-  name: '',
-  number: '',
-  id: '',
-};
+// const initialContacts = {
+//   name: '',
+//   number: '',
+//   id: '',
+// };
 
 const getContacts = () => {
   const savedContacts = window.localStorage.getItem(storageKey);
-  return savedContacts !== null ? JSON.parse(savedContacts) : initialContacts;
+  return savedContacts !== null ? JSON.parse(savedContacts) : [];
 };
-
 export const App = () => {
   const [contacts, setContacts] = useState(getContacts);
   const [contactsFilter, setcontactsFilter] = useState('');
